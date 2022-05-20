@@ -1,3 +1,5 @@
+// File containing the basic settings of the Chrome browser used in the tests
+
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using System;
