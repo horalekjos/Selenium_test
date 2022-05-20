@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium.Support.UI;
+//File to open the Tests class, which contains tests
+
+using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
 
