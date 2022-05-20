@@ -1,4 +1,4 @@
-//
+//File to open the Steps class, which contains the steps that make up the tests
 
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
