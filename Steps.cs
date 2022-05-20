@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+//
+
+using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
@@ -40,7 +42,7 @@ namespace UHK_Selenium_Adam_Kucera
             var views = driver.FindElementsByXPath("//app-platform-mmview-card-item");  // ulozi vsechny views do kolekce
             for (int i = 1; i <= views.Count; i++)
             {
-                var viewHeader = driver.FindElementByXPath("//app-platform-mmview-card-item[" + i + "]//mat-card-title").Text;  // prvni pohled zacina cislem 1
+                var viewHeader = driver.FindElementByXPath("//app-platform-mmview-card-item[" + i + "]//mat-card-title").Text;  // first view starts with 1
                 if (viewName != viewHeader)
                 {
                     continue;
@@ -91,12 +93,12 @@ namespace UHK_Selenium_Adam_Kucera
         }
 
 
-        public void View_DeleteCalculationFormula(RemoteWebDriver driver, string name)    // smaze calculation formula, ktera byla vyhledana podle searchbaru
+        public void View_DeleteCalculationFormula(RemoteWebDriver driver, string name)    // delete calculation formula that was searched by searchbar
         {
 
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 30));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html[1]/body[1]/app-platform-root[1]/div[1]/app-platform-material-management[1]/app-platform-material-management-view[1]/app-platform-format-line-style-sidenav[1]/mat-sidenav-container[1]/mat-sidenav-content[1]/div[1]/app-platform-panel[1]/mat-card[1]/mat-card-content[1]/app-platform-single-values[1]/div[1]/ejs-grid[1]/div[4]/div[1]/table[1]/tbody[1]/tr[1]/td[8]/a[4]/span[1]"))).Click();
-            // potvrzeni smazani spravne calculation formula podle jmena zadaneho pri vytvoreni
+            // confirmation of the deletion of the correct calculation formula by the name entered during creation
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElementLocated(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-platform-confirmation-dialog/app-platform-shared-dialog/div/mat-card-content/div"), "Do you really want to delete calculation line " + name + " ?"));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-platform-confirmation-dialog/app-platform-shared-dialog/div/mat-card-actions/div/button[1]"))).Click();
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//span[contains(text(),'Record deleted successfully!')]")));
@@ -144,7 +146,7 @@ namespace UHK_Selenium_Adam_Kucera
         public void ViewSelect_SearchWidget(RemoteWebDriver driver, string view)
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
-            // resi problem s nekdy dlouho trvajicim nactenim views pro vybrani
+            // solves the problem with sometimes long-lasting loading of views for selection
             var stop = false;
             for (int i = 0; i < 100; i++)
             {
@@ -198,12 +200,12 @@ namespace UHK_Selenium_Adam_Kucera
             action.SendKeys(Keys.Escape).Perform();
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//input[@placeholder='Delivery date']"))).SendKeys(deliveryDate);
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id("submit"))).Click();
-            // kontrola zobrazene hlasky po vytvoreni zaznamu
+            // checking the displayed voice after creating a record
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath("//span[contains(text(),'Material order created.')]")));
         }
 
 
-        public void SearchForMaterialOrder(RemoteWebDriver driver, string searchParameter) // nalezeni zaznamu podle cisla
+        public void SearchForMaterialOrder(RemoteWebDriver driver, string searchParameter) // finding a record by number
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector("input[type=search]"))).SendKeys(searchParameter);
@@ -236,13 +238,13 @@ namespace UHK_Selenium_Adam_Kucera
         public void CreateVirtualGroup(RemoteWebDriver driver, string nameOfGroup)
         {
             var wait = new WebDriverWait(driver, new TimeSpan(0, 0, 10));
-            // klikne na tlacitko pro pridani
+            // clicks the add button
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//mat-icon[text()='add']"))).Click();
             // jmeno virtualni skupiny
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//input[@placeholder='VirtalGroup add']"))).Click();
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("//input[@placeholder='Insert Group name']"))).SendKeys(nameOfGroup);
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.XPath("/html/body/div[2]/div[2]/div/mat-dialog-container/app-platform-add-group/form/mat-dialog-actions/button[2]"))).Click();
-            // porovnani
+            // Compare
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.TextToBePresentInElementLocated(By.XPath("//div[contains(text(),'Selenium Virtual Group')]"), nameOfGroup));
         }
 
